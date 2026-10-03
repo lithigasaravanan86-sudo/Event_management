@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel - College Event Management System</title>
+  <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="/" class="brand-logo">
+        <div class="brand-icon">🎓</div>
+        <div class="brand-text">CEMS<span>.admin</span></div>
+      </a>
+
+      <button class="mobile-toggle" aria-label="Toggle navigation">☰</button>
+
+      <nav>
+        <ul class="nav-menu">
+          <li><a href="/" class="nav-link">Home</a></li>
+          <li><a href="/events" class="nav-link">View Public Events</a></li>
+          <li><a href="/admin-dashboard" class="nav-link active">Admin Dashboard</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions" id="navAuthActions">
+        <!-- Auth state injected by app.js -->
+      </div>
+    </div>
+  </header>
+
+  <!-- Admin Header & KPI Banner -->
+  <section class="dashboard-header">
+    <div class="container">
+      <div class="dashboard-title-row">
+        <div>
+          <span style="font-size: 0.85rem; font-weight: 700; color: var(--primary); text-transform: uppercase;">Faculty & Club Coordinator Portal</span>
+          <h1 style="font-size: 2.2rem; margin-top: 0.2rem;">
+            Admin Dashboard: <span id="adminGreetingName">Faculty Coordinator</span>
+          </h1>
+          <p style="color: var(--text-secondary); margin-top: 0.25rem;">
+            Manage college events, oversee student registrations, and view participation metrics.
+          </p>
+        </div>
+
+        <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+          <button class="btn btn-secondary" onclick="exportRegistrationsCSV()">
+            📥 Export to CSV
+          </button>
+          <button class="btn btn-primary" onclick="openAddEventModal()">
+            + Add New Event
+          </button>
+        </div>
+      </div>
+
+      <!-- KPI Metrics -->
+      <div class="dashboard-metrics">
+        <div class="metric-card">
+          <div class="metric-icon-wrap metric-purple">📅</div>
+          <div>
+            <div class="metric-value" id="statTotalEvents">0</div>
+            <div class="metric-label">Total Events</div>
+          </div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-icon-wrap metric-blue">👥</div>
+          <div>
+            <div class="metric-value" id="statTotalRegistrations">0</div>
+            <div class="metric-label">Confirmed Registrations</div>
+          </div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-icon-wrap metric-green">⚡</div>
+          <div>
+            <div class="metric-value" id="statActiveEvents">0</div>
+            <div class="metric-label">Active / Upcoming</div>
+          </div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-icon-wrap metric-amber">🎓</div>
+          <div>
+            <div class="metric-value" id="statTotalStudents">0</div>
+            <div class="metric-label">Registered Students</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Management Section with Tabs -->
+  <main class="container" style="padding-top: 2rem; padding-bottom: 4rem; flex: 1;">
+
+    <!-- Dashboard Tabs -->
+    <div class="dashboard-tabs">
+      <button class="dash-tab active" data-tab="events" onclick="switchAdminTab('events')">
+        Manage Events
+      </button>
+      <button class="dash-tab" data-tab="registrations" onclick="switchAdminTab('registrations')">
+        Student Registrations
+      </button>
+      <button class="dash-tab" data-tab="analytics" onclick="switchAdminTab('analytics')">
+        Category Analytics
+      </button>
+    </div>
+
+    <!-- Tab 1: Manage Events -->
+    <div id="tabManageEvents">
+      <div class="table-card">
+        <div class="table-toolbar">
+          <div style="flex: 1; min-width: 250px;">
+            <input type="text" id="adminEventSearch" class="form-control" placeholder="Search event by title, venue, or organizer..." style="max-width: 380px;">
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="openAddEventModal()">
+            + Add New Event
+          </button>
+        </div>
+
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Event Title & Organizer</th>
+                <th>Category</th>
+                <th>Date & Venue</th>
+                <th>Capacity / Filled</th>
+                <th>Status</th>
+                <th style="text-align: right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="adminEventsTableBody">
+              <!-- Injected by admin.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab 2: Registrations & Students -->
+    <div id="tabRegistrations" style="display: none;">
+      <div class="table-card">
+        <div class="table-toolbar">
+          <div style="display: flex; gap: 1rem; flex-wrap: wrap; flex: 1;">
+            <select id="adminEventFilterSelect" class="form-control" style="max-width: 280px;" onchange="onFilterEventChanged()">
+              <option value="">-- All Events --</option>
+            </select>
+            <input type="text" id="adminRegSearch" class="form-control" placeholder="Search student name, roll no, or ticket..." style="max-width: 320px;">
+          </div>
+          <button class="btn btn-secondary btn-sm" onclick="exportRegistrationsCSV()">
+            📥 Export CSV Report
+          </button>
+        </div>
+
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Ticket Ref</th>
+                <th>Student Name & Email</th>
+                <th>Roll No</th>
+                <th>Department & Year</th>
+                <th>Event Title</th>
+                <th>Status</th>
+                <th>Registered At</th>
+              </tr>
+            </thead>
+            <tbody id="adminRegistrationsTableBody">
+              <!-- Injected by admin.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab 3: Analytics & Category Distribution -->
+    <div id="tabAnalytics" style="display: none;">
+      <div class="table-card" style="padding: 2rem;">
+        <h3 style="margin-bottom: 0.5rem;">Registration Distribution by Event Category</h3>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 2rem;">
+          Real-time student participation breakdown across campus clubs and departments.
+        </p>
+
+        <div id="categoryAnalyticsContainer" style="max-width: 650px;">
+          <!-- Injected by admin.js -->
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Add / Edit Event Modal -->
+  <div class="modal-backdrop" id="eventFormModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title" id="eventModalHeaderTitle">Add New College Event</h3>
+        <button class="modal-close" onclick="closeModal('eventFormModal')">&times;</button>
+      </div>
+      <form id="eventForm">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label" for="evTitle">Event Name / Title <span class="req">*</span></label>
+            <input type="text" id="evTitle" class="form-control" placeholder="e.g. HackNova 2026 - Annual 24hr Hackathon" required>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="evCategory">Category <span class="req">*</span></label>
+              <select id="evCategory" class="form-control" required>
+                <option value="Technical">Technical</option>
+                <option value="Cultural">Cultural</option>
+                <option value="Sports">Sports</option>
+                <option value="Workshop">Workshop</option>
+                <option value="Seminar">Seminar</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="evStatus">Event Status <span class="req">*</span></label>
+              <select id="evStatus" class="form-control" required>
+                <option value="Upcoming">Upcoming</option>
+                <option value="Ongoing">Ongoing</option>
+                <option value="Completed">Completed</option>
+                <option value="Closed">Closed</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="evDescription">Event Description <span class="req">*</span></label>
+            <textarea id="evDescription" class="form-control" rows="3" placeholder="Provide event agenda, guidelines, eligibility, and prize details" required></textarea>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="evDate">Event Date <span class="req">*</span></label>
+              <input type="date" id="evDate" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="evTime">Event Time <span class="req">*</span></label>
+              <input type="text" id="evTime" class="form-control" placeholder="e.g. 10:00 AM - 04:00 PM" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="evVenue">Venue Location <span class="req">*</span></label>
+              <input type="text" id="evVenue" class="form-control" placeholder="e.g. Auditorium Hall A or Main Ground" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="evOrganizer">Organizer / Department / Club <span class="req">*</span></label>
+              <input type="text" id="evOrganizer" class="form-control" placeholder="e.g. ACM Chapter & Dept of CSE" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="evMaxParticipants">Maximum Participants <span class="req">*</span></label>
+              <input type="number" id="evMaxParticipants" class="form-control" min="1" value="100" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="evDeadline">Registration Deadline <span class="req">*</span></label>
+              <input type="date" id="evDeadline" class="form-control" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="evBannerUrl">Banner Image URL (Optional)</label>
+            <input type="url" id="evBannerUrl" class="form-control" placeholder="https://images.unsplash.com/...">
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('eventFormModal')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Event</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Delete Event Confirmation Modal -->
+  <div class="modal-backdrop" id="deleteEventModal">
+    <div class="modal-dialog" style="max-width: 440px;">
+      <div class="modal-header">
+        <h3 class="modal-title" style="color: var(--danger);">Confirm Event Deletion</h3>
+        <button class="modal-close" onclick="closeModal('deleteEventModal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="color: var(--text-secondary); line-height: 1.6;">
+          Are you sure you want to delete <strong id="deleteEventTitle">this event</strong>? All student registrations associated with this event will also be removed.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('deleteEventModal')">Cancel</button>
+        <button class="btn btn-danger" id="confirmDeleteEventBtn" onclick="executeDeleteEvent()">
+          Yes, Delete Event
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom" style="border-top: none; padding-top: 0;">
+        &copy; 2026 College Event Management System (CEMS).
+      </div>
+    </div>
+  </footer>
+
+  <script src="/static/js/app.js"></script>
+  <script src="/static/js/admin.js"></script>
+</body>
+</html>

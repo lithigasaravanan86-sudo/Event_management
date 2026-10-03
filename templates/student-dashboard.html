@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Portal - CEMS</title>
+  <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="/" class="brand-logo">
+        <div class="brand-icon">🎓</div>
+        <div class="brand-text">CEMS<span>.college</span></div>
+      </a>
+
+      <button class="mobile-toggle" aria-label="Toggle navigation">☰</button>
+
+      <nav>
+        <ul class="nav-menu">
+          <li><a href="/" class="nav-link">Home</a></li>
+          <li><a href="/events" class="nav-link">Browse Events</a></li>
+          <li><a href="/student-dashboard" class="nav-link active">My Dashboard</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions" id="navAuthActions">
+        <!-- Injected by app.js -->
+      </div>
+    </div>
+  </header>
+
+  <!-- Student Header & Profile Banner -->
+  <section class="dashboard-header">
+    <div class="container">
+      <div class="dashboard-title-row">
+        <div>
+          <span style="font-size: 0.85rem; font-weight: 700; color: var(--primary); text-transform: uppercase;">Student Portal</span>
+          <h1 style="font-size: 2.2rem; margin-top: 0.2rem;">
+            Welcome, <span id="studentGreetingName">Student</span>!
+          </h1>
+          <div id="studentProfileMeta" style="color: var(--text-secondary); margin-top: 0.35rem; font-size: 0.9rem;">
+            <!-- Roll No, Dept, Year injected here -->
+          </div>
+        </div>
+
+        <a href="/events" class="btn btn-primary">
+          + Explore & Register for Events
+        </a>
+      </div>
+
+      <!-- KPI Metrics -->
+      <div class="dashboard-metrics">
+        <div class="metric-card">
+          <div class="metric-icon-wrap metric-blue">🎟️</div>
+          <div>
+            <div class="metric-value" id="statTotalRegs">0</div>
+            <div class="metric-label">Total Registrations</div>
+          </div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-icon-wrap metric-green">✓</div>
+          <div>
+            <div class="metric-value" id="statConfirmedRegs">0</div>
+            <div class="metric-label">Confirmed Passes</div>
+          </div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-icon-wrap metric-amber">↩️</div>
+          <div>
+            <div class="metric-value" id="statCancelledRegs">0</div>
+            <div class="metric-label">Cancelled / Released</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- My Registrations Section -->
+  <main class="container" style="padding-top: 2rem; padding-bottom: 4rem; flex: 1;">
+    <div class="table-card">
+      <div class="table-toolbar">
+        <div>
+          <h3 style="font-size: 1.25rem;">My Event Registrations & Passes</h3>
+          <p style="font-size: 0.85rem; color: var(--text-muted);">View digital passes or cancel registrations to release seats</p>
+        </div>
+        <button onclick="loadStudentRegistrations()" class="btn btn-sm btn-secondary" title="Refresh">
+          ↻ Refresh
+        </button>
+      </div>
+
+      <div class="table-responsive">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Event & Ticket Ref</th>
+              <th>Category</th>
+              <th>Date & Venue</th>
+              <th>Registered On</th>
+              <th>Status</th>
+              <th style="text-align: right;">Action</th>
+            </tr>
+          </thead>
+          <tbody id="studentRegistrationsBody">
+            <!-- Injected by student.js -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <!-- Digital Ticket / Event Pass Modal -->
+  <div class="modal-backdrop" id="ticketModal">
+    <div class="modal-dialog" style="max-width: 520px; background: transparent; box-shadow: none;">
+      <div style="text-align: right; margin-bottom: 0.5rem;">
+        <button class="btn btn-sm btn-secondary" onclick="closeModal('ticketModal')" style="border-radius: var(--radius-full);">✕ Close</button>
+      </div>
+      
+      <div id="digitalPassContainer">
+        <!-- Injected dynamically by student.js -->
+      </div>
+
+      <div style="text-align: center; margin-top: 1.25rem;">
+        <button class="btn btn-primary" onclick="printTicketPass()">
+          🖨️ Print / Save Ticket Pass
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cancel Confirmation Modal -->
+  <div class="modal-backdrop" id="cancelConfirmModal">
+    <div class="modal-dialog" style="max-width: 440px;">
+      <div class="modal-header">
+        <h3 class="modal-title" style="color: var(--danger);">Cancel Registration</h3>
+        <button class="modal-close" onclick="closeModal('cancelConfirmModal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p id="cancelConfirmText" style="color: var(--text-secondary); line-height: 1.6;">
+          Are you sure you want to cancel this event registration? Your ticket will be voided and your seat will be released.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('cancelConfirmModal')">Keep Registration</button>
+        <button class="btn btn-danger" id="confirmCancelBtn" onclick="executeCancelRegistration()">
+          Yes, Cancel Registration
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom" style="border-top: none; padding-top: 0;">
+        &copy; 2026 College Event Management System (CEMS).
+      </div>
+    </div>
+  </footer>
+
+  <script src="/static/js/app.js"></script>
+  <script src="/static/js/student.js"></script>
+</body>
+</html>

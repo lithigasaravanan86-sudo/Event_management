@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal Access - College Event Management System</title>
+  <meta name="description" content="Sign in or register for the College Event Management System as a Student or Administrator.">
+  <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="/" class="brand-logo">
+        <div class="brand-icon">🎓</div>
+        <div class="brand-text">CEMS<span>.college</span></div>
+      </a>
+
+      <button class="mobile-toggle" aria-label="Toggle navigation">☰</button>
+
+      <nav>
+        <ul class="nav-menu">
+          <li><a href="/" class="nav-link">Home</a></li>
+          <li><a href="/events" class="nav-link">All Events</a></li>
+          <li><a href="/login" class="nav-link active">Sign In / Register</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions" id="navAuthActions">
+        <a href="/" class="btn btn-sm btn-secondary">Back to Home</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Auth Card Container -->
+  <main class="container" style="flex: 1; display: flex; align-items: center; justify-content: center;">
+    <div class="auth-wrapper" style="width: 100%;">
+      <div class="auth-card">
+        <div class="auth-header">
+          <div style="font-size: 2.2rem; margin-bottom: 0.25rem;">🔐</div>
+          <h2 class="auth-title" id="authTitle">Student Sign In</h2>
+          <p class="auth-subtitle" id="authSubtitle">Access your event registrations and digital passes</p>
+        </div>
+
+        <!-- 3 Tab Switcher -->
+        <div class="auth-tabs">
+          <button type="button" class="auth-tab active" data-tab="student-login" onclick="switchAuthTab('student-login')">
+            Student Login
+          </button>
+          <button type="button" class="auth-tab" data-tab="student-register" onclick="switchAuthTab('student-register')">
+            Student Sign Up
+          </button>
+          <button type="button" class="auth-tab" data-tab="admin-login" onclick="switchAuthTab('admin-login')">
+            Admin Login
+          </button>
+        </div>
+
+        <!-- Form 1: Student Login -->
+        <form id="studentLoginForm">
+          <div class="form-group">
+            <label class="form-label" for="stuLoginIdentifier">Roll Number or College Email <span class="req">*</span></label>
+            <input type="text" id="stuLoginIdentifier" class="form-control" placeholder="e.g. CS2023001 or student@college.edu" required autocomplete="username">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="stuLoginPassword">Password <span class="req">*</span></label>
+            <input type="password" id="stuLoginPassword" class="form-control" placeholder="Enter your password" required autocomplete="current-password">
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block">
+            Sign In as Student
+          </button>
+
+          <div style="text-align: center; margin-top: 1rem; font-size: 0.85rem;">
+            New student? <a href="javascript:void(0)" onclick="switchAuthTab('student-register')">Create an account here</a>
+          </div>
+        </form>
+
+        <!-- Form 2: Student Registration -->
+        <form id="studentRegisterForm" style="display: none;">
+          <div class="form-group">
+            <label class="form-label" for="regFullName">Full Name <span class="req">*</span></label>
+            <input type="text" id="regFullName" class="form-control" placeholder="e.g. Aarav Patel" required>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="regRollNumber">Roll Number <span class="req">*</span></label>
+              <input type="text" id="regRollNumber" class="form-control" placeholder="e.g. CS2023001" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="regPhone">Phone Number</label>
+              <input type="tel" id="regPhone" class="form-control" placeholder="e.g. +91 9876543210">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="regEmail">College Email Address <span class="req">*</span></label>
+            <input type="email" id="regEmail" class="form-control" placeholder="student@college.edu" required>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="regDepartment">Department <span class="req">*</span></label>
+              <select id="regDepartment" class="form-control" required>
+                <option value="">Select Department</option>
+                <option value="Computer Science">Computer Science & Engg</option>
+                <option value="Information Technology">Information Technology</option>
+                <option value="Electronics & Communication">Electronics & Comm. (ECE)</option>
+                <option value="Mechanical Engineering">Mechanical Engineering</option>
+                <option value="Civil Engineering">Civil Engineering</option>
+                <option value="Electrical Engineering">Electrical & Electronics</option>
+                <option value="Management Studies">Management (MBA/BBA)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="regYear">Academic Year <span class="req">*</span></label>
+              <select id="regYear" class="form-control" required>
+                <option value="">Select Year</option>
+                <option value="1st Year">1st Year (Freshman)</option>
+                <option value="2nd Year">2nd Year (Sophomore)</option>
+                <option value="3rd Year">3rd Year (Junior)</option>
+                <option value="4th Year">4th Year (Senior)</option>
+                <option value="Postgraduate">Postgraduate (PG)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="regPassword">Password <span class="req">*</span></label>
+              <input type="password" id="regPassword" class="form-control" placeholder="Min 6 characters" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="regConfirmPassword">Confirm Password <span class="req">*</span></label>
+              <input type="password" id="regConfirmPassword" class="form-control" placeholder="Re-enter password" required>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block">
+            Complete Registration
+          </button>
+
+          <div style="text-align: center; margin-top: 1rem; font-size: 0.85rem;">
+            Already have an account? <a href="javascript:void(0)" onclick="switchAuthTab('student-login')">Sign in here</a>
+          </div>
+        </form>
+
+        <!-- Form 3: Admin Login -->
+        <form id="adminLoginForm" style="display: none;">
+          <div class="form-group">
+            <label class="form-label" for="adminIdentifier">Admin Username or Email <span class="req">*</span></label>
+            <input type="text" id="adminIdentifier" class="form-control" placeholder="e.g. admin or admin@college.edu" required autocomplete="username">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="adminPassword">Admin Password <span class="req">*</span></label>
+            <input type="password" id="adminPassword" class="form-control" placeholder="Enter admin password" required autocomplete="current-password">
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block">
+            Sign In as Admin
+          </button>
+        </form>
+
+        <!-- Demo Credentials Helper Box -->
+        <div class="demo-credentials-box">
+          <p>💡 Quick Demonstration Logins for Evaluation:</p>
+          <div class="demo-btn-row">
+            <button type="button" class="btn btn-sm btn-secondary" onclick="fillStudentDemo()">
+              Auto-fill Student Demo
+            </button>
+            <button type="button" class="btn btn-sm btn-secondary" onclick="fillAdminDemo()">
+              Auto-fill Admin Demo
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom" style="border-top: none; padding-top: 0;">
+        &copy; 2026 College Event Management System (CEMS).
+      </div>
+    </div>
+  </footer>
+
+  <script src="/static/js/app.js"></script>
+  <script src="/static/js/auth.js"></script>
+</body>
+</html>

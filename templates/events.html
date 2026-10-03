@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Events & Competitions - CEMS</title>
+  <meta name="description" content="Browse all college events, technical hackathons, cultural festivals, sports, and seminars. Register online easily.">
+  <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="/" class="brand-logo">
+        <div class="brand-icon">🎓</div>
+        <div class="brand-text">CEMS<span>.college</span></div>
+      </a>
+
+      <button class="mobile-toggle" aria-label="Toggle navigation">☰</button>
+
+      <nav>
+        <ul class="nav-menu">
+          <li><a href="/" class="nav-link">Home</a></li>
+          <li><a href="/events" class="nav-link active">All Events</a></li>
+          <li><a href="/login" class="nav-link">Student Portal</a></li>
+          <li><a href="/login?tab=admin" class="nav-link">Admin Panel</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions" id="navAuthActions">
+        <a href="/login" class="btn btn-sm btn-primary">Sign In / Register</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Header -->
+  <section style="background: white; border-bottom: 1px solid var(--border-color); padding: 2.5rem 0;">
+    <div class="container">
+      <h1 style="font-size: 2.2rem; margin-bottom: 0.5rem;">Explore Campus Events</h1>
+      <p style="color: var(--text-secondary); max-width: 650px;">
+        Filter by category, search by event title or venue, and claim your registration passes before seats fill up.
+      </p>
+    </div>
+  </section>
+
+  <!-- Filters & Search Section -->
+  <section class="filter-section">
+    <div class="container">
+      <div class="filter-bar">
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="eventSearchInput" class="search-input" placeholder="Search events by title, organizer, or venue..." />
+        </div>
+
+        <div class="category-pills">
+          <button class="category-pill active" data-category="all">All Events</button>
+          <button class="category-pill" data-category="Technical">💻 Technical</button>
+          <button class="category-pill" data-category="Cultural">🎭 Cultural</button>
+          <button class="category-pill" data-category="Sports">⚽ Sports</button>
+          <button class="category-pill" data-category="Workshop">🛠️ Workshop</button>
+          <button class="category-pill" data-category="Seminar">🎤 Seminar</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Events Grid -->
+  <main class="container" style="flex: 1;">
+    <div id="eventsContainer" class="events-grid">
+      <!-- Events injected by events.js -->
+    </div>
+  </main>
+
+  <!-- Event Details & Registration Modal -->
+  <div class="modal-backdrop" id="eventDetailsModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title" id="eventModalTitle">Event Information</h3>
+        <button class="modal-close" onclick="closeModal('eventDetailsModal')">&times;</button>
+      </div>
+      <div class="modal-body" id="eventModalBody">
+        <!-- Injected dynamically -->
+      </div>
+      <div class="modal-footer" id="eventModalFooter">
+        <!-- Actions -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom" style="border-top: none; padding-top: 0;">
+        &copy; 2026 College Event Management System (CEMS). Developed with Python Flask & MySQL.
+      </div>
+    </div>
+  </footer>
+
+  <script src="/static/js/app.js"></script>
+  <script src="/static/js/events.js"></script>
+</body>
+</html>

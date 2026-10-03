@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CEMS - College Event Management System</title>
+  <meta name="description" content="Discover, participate, and manage vibrant campus events, technical hackathons, cultural festivals, and sports tournaments.">
+  <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="/" class="brand-logo">
+        <div class="brand-icon">🎓</div>
+        <div class="brand-text">CEMS<span>.college</span></div>
+      </a>
+
+      <button class="mobile-toggle" aria-label="Toggle navigation">☰</button>
+
+      <nav>
+        <ul class="nav-menu">
+          <li><a href="/" class="nav-link active">Home</a></li>
+          <li><a href="/events" class="nav-link">All Events</a></li>
+          <li><a href="/login" class="nav-link">Student Portal</a></li>
+          <li><a href="/login?tab=admin" class="nav-link">Admin Panel</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions" id="navAuthActions">
+        <a href="/login" class="btn btn-sm btn-primary">Sign In / Register</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-pill">
+          <span>✨ Academic Year 2026</span> • <span>Campus Fest Registrations Open</span>
+        </div>
+        <h1 class="hero-title">
+          Connect, Participate & Excel in <br>
+          <span class="gradient-text">College Events & Festivities</span>
+        </h1>
+        <p class="hero-desc">
+          Your centralized gateway to hackathons, cultural spectacles, sports tournaments, technical workshops, and guest seminars. Experience seamless registration and instant digital passes.
+        </p>
+
+        <div class="hero-actions">
+          <a href="/events" class="btn btn-lg btn-primary">
+            🚀 Explore Upcoming Events
+          </a>
+          <a href="/login?tab=register" class="btn btn-lg btn-secondary">
+            Student Sign Up
+          </a>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="hero-stats">
+          <div class="stat-item">
+            <div class="stat-number">25+</div>
+            <div class="stat-label">Annual Events</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">1,200+</div>
+            <div class="stat-label">Active Students</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">100%</div>
+            <div class="stat-label">Paperless Digital Passes</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">6+</div>
+            <div class="stat-label">Event Categories</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categories Showcase -->
+  <section style="padding: 4rem 0 2rem;">
+    <div class="container">
+      <div style="text-align: center; margin-bottom: 2.5rem;">
+        <span style="font-size: 0.85rem; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 0.05em;">Categories</span>
+        <h2 style="font-size: 2rem; margin-top: 0.35rem;">Discover by Interest</h2>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.25rem;">
+        <a href="/events?cat=Technical" class="metric-card" style="text-decoration: none;">
+          <div class="metric-icon-wrap metric-blue">💻</div>
+          <div>
+            <div style="font-weight: 700; color: var(--text-primary);">Technical</div>
+            <div style="font-size: 0.8rem; color: var(--text-muted);">Coding, Hackathons, AI</div>
+          </div>
+        </a>
+
+        <a href="/events?cat=Cultural" class="metric-card" style="text-decoration: none;">
+          <div class="metric-icon-wrap metric-purple">🎭</div>
+          <div>
+            <div style="font-weight: 700; color: var(--text-primary);">Cultural</div>
+            <div style="font-size: 0.8rem; color: var(--text-muted);">Dance, Music, Drama</div>
+          </div>
+        </a>
+
+        <a href="/events?cat=Sports" class="metric-card" style="text-decoration: none;">
+          <div class="metric-icon-wrap metric-green">⚽</div>
+          <div>
+            <div style="font-weight: 700; color: var(--text-primary);">Sports</div>
+            <div style="font-size: 0.8rem; color: var(--text-muted);">Tournaments & Athletics</div>
+          </div>
+        </a>
+
+        <a href="/events?cat=Workshop" class="metric-card" style="text-decoration: none;">
+          <div class="metric-icon-wrap metric-amber">🛠️</div>
+          <div>
+            <div style="font-weight: 700; color: var(--text-primary);">Workshops</div>
+            <div style="font-size: 0.8rem; color: var(--text-muted);">Hands-on Skill Labs</div>
+          </div>
+        </a>
+
+        <a href="/events?cat=Seminar" class="metric-card" style="text-decoration: none;">
+          <div class="metric-icon-wrap metric-blue">🎤</div>
+          <div>
+            <div style="font-weight: 700; color: var(--text-primary);">Seminars</div>
+            <div style="font-size: 0.8rem; color: var(--text-muted);">Industry & Research Talks</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Upcoming Events -->
+  <section style="padding: 2.5rem 0 4rem;">
+    <div class="container">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 1.75rem; flex-wrap: wrap; gap: 1rem;">
+        <div>
+          <span style="font-size: 0.85rem; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 0.05em;">Highlights</span>
+          <h2 style="font-size: 2rem; margin-top: 0.35rem;">Featured Campus Events</h2>
+        </div>
+        <a href="/events" class="btn btn-outline-primary btn-sm">
+          View All Events →
+        </a>
+      </div>
+
+      <!-- Events Grid Container -->
+      <div id="eventsContainer" class="events-grid">
+        <!-- Rendered dynamically by events.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Event Details Modal -->
+  <div class="modal-backdrop" id="eventDetailsModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title" id="eventModalTitle">Event Information</h3>
+        <button class="modal-close" onclick="closeModal('eventDetailsModal')">&times;</button>
+      </div>
+      <div class="modal-body" id="eventModalBody">
+        <!-- Dynamically injected -->
+      </div>
+      <div class="modal-footer" id="eventModalFooter">
+        <!-- Actions -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>🎓 College Event Management System</h4>
+          <p style="font-size: 0.9rem; line-height: 1.6; margin-top: 0.5rem;">
+            A premier campus events portal developed with Python Flask and MySQL. Empowering students, faculty coordinators, and club organizers with real-time registrations and transparent event analytics.
+          </p>
+        </div>
+        <div class="footer-links">
+          <h5>Quick Navigation</h5>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/events">Upcoming Events</a></li>
+            <li><a href="/login">Student Sign In</a></li>
+            <li><a href="/login?tab=register">New Student Registration</a></li>
+            <li><a href="/login?tab=admin">Admin Panel</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h5>Demo Credentials</h5>
+          <p style="font-size: 0.82rem; margin-bottom: 0.5rem;"><strong>Student:</strong> CS2023001 / student123</p>
+          <p style="font-size: 0.82rem; margin-bottom: 0.5rem;"><strong>Admin:</strong> admin / admin123</p>
+          <p style="font-size: 0.82rem; color: #a5b4fc; margin-top: 0.75rem;">Database: MySQL / SQLite Dual-Engine</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        &copy; 2026 College Event Management System (CEMS). Built for College Mini-Project Demonstration.
+      </div>
+    </div>
+  </footer>
+
+  <script src="/static/js/app.js"></script>
+  <script src="/static/js/events.js"></script>
+</body>
+</html>
